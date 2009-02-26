@@ -1,0 +1,54 @@
+SearchableAttributes
+====================
+
+  Searchable plugin is a Rails plugin that makes searching on ActiveRecord
+  attributes a snap.  It makes use of chained named_scope's so attributes
+  can be optional in a search.  It also generates only one SQL query so it
+  does not slow down your database.
+
+  This is not about full-text search.
+
+
+Example
+=======
+
+  You want to perform search on the User model:
+
+    class User < ActiveRecord::Base
+      searchable_attributes :exact => [ :first_name, :last_name ], :like => [ :address, :city ]
+      searchable_attributes :exact => :middle_name, :like => :state
+    end
+
+  Attributes specified with :exact match have to match exactly the given
+  values.  Attributes specified with :like only need to match the values
+  partially (i.e. LIKE '%Calif%' in SQL)
+
+  In the controller:
+
+    def index
+      @users = User.with_first_name('Gilbert').with_middle_name('James').with_last_name('Butler').with_address_like('Main').with_city_like('Great').with_state_like('Calif')
+    end
+
+  You do not have to specify everything:
+
+    def index
+      @users = User.with_state_like('Virginia')
+    end
+
+Improvements
+============
+
+  Please feel free to submit patches for bug fixes and improvements.
+  Specifically, I would like to:
+
+    (1) Use something nicer than system("convert blah..."), but couldn't get it
+        to work.  I don't think Minimagick supports compositing images, so
+        RMagick may have to be used, but is it worth the heavy memory
+        consumption?
+
+    (2) Make it more flexible (i.e. accept background image and composite
+        params dynamically instead of in badger.yml).  Maybe pass them in the
+        call to create_badge?
+
+
+Copyright (c) 2009 Raymond Law and Intridea, Inc., released under the MIT license
