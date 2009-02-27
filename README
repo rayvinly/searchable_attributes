@@ -21,11 +21,13 @@ Example
   When you do a search:
 
     def index
-      @users = User.with_first_name_equal('Gilbert').with_last_name_equal_if_not_null('Arenas').with_address_like('Main Street').with_age_greater_than(25).with_state_in(['VA', 'MD', 'DC']).with_position_end_with('Guard').with_salary_within_inclusive((100..10000)).with_injured_equal(true).with_join_date_greater_than_or_equal_to(5.years.ago)
+      @users = User.with_first_name_equal('Gilbert').with_last_name_equal_if_not_null('Arenas').with_address_like('Main Street').with_age_greater_than(25).with_state_equal(['VA', 'MD', 'DC']).with_position_end_with('Guard').with_salary_within_inclusive((100..10000)).with_injured_equal(true).with_join_date_greater_than_or_equal_to(5.years.ago)
     end
 
+  Note that the _equal named_scope takes an array and uses IN (val 1, val_2).
+
   The beauty of it is you can pass the search params straight through:
-  
+
   def index
     @users = User.with_first_name(params[:user][:first_name]).with_injured(params[:user][:injured])
   end

@@ -1,23 +1,26 @@
 gilbert_arenas:
   first_name: Gilbert
-  middle_name: Jay
   last_name: Arenas
-  address: 123 Main Street
-  city: Great Falls
-  state: Virginia
+  position: Point Guard
+  injured: true
+  age: 26
+  salary: 99999.99
+  join_on: 2004-02-27
 
 caron_butler:
   first_name: Caron
-  middle_name: James
   last_name: Butler
-  address: 123 Main Street
-  city: Great Falls
-  state: Virginia
+  position: Small Forward
+  injured: false
+  age: 28
+  salary: 33333.33
+  join_on: 2006-02-27
 
 antawn_jamison:
   first_name: Antawn
-  middle_name: Cortez
   last_name: Jamison
-  address: 123 Main Street
-  city: Washington
-  state: District of Columbia
+  position: Power Forward
+  injured: false
+  age: 30
+  salary: 44444.44
+  join_on: 2006-02-27
