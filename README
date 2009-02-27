@@ -15,40 +15,20 @@ Example
   You want to perform search on the User model:
 
     class User < ActiveRecord::Base
-      searchable_attributes :exact => [ :first_name, :last_name ], :like => [ :address, :city ]
-      searchable_attributes :exact => :middle_name, :like => :state
+      searchable_attributes
     end
 
-  Attributes specified with :exact match have to match exactly the given
-  values.  Attributes specified with :like only need to match the values
-  partially (i.e. LIKE '%Calif%' in SQL)
-
-  In the controller:
+  When you do a search:
 
     def index
-      @users = User.with_first_name('Gilbert').with_middle_name('James').with_last_name('Butler').with_address_like('Main').with_city_like('Great').with_state_like('Calif')
+      @users = User.with_first_name_equal('Gilbert').with_last_name_equal_if_not_null('Arenas').with_address_like('Main Street').with_age_greater_than(25).with_state_in(['VA', 'MD', 'DC']).with_position_end_with('Guard').with_salary_within_inclusive((100..10000)).with_injured_equal(true).with_join_date_greater_than_or_equal_to(5.years.ago)
     end
 
-  You do not have to specify everything:
-
-    def index
-      @users = User.with_state_like('Virginia')
-    end
-
-Improvements
-============
-
-  Please feel free to submit patches for bug fixes and improvements.
-  Specifically, I would like to:
-
-    (1) Use something nicer than system("convert blah..."), but couldn't get it
-        to work.  I don't think Minimagick supports compositing images, so
-        RMagick may have to be used, but is it worth the heavy memory
-        consumption?
-
-    (2) Make it more flexible (i.e. accept background image and composite
-        params dynamically instead of in badger.yml).  Maybe pass them in the
-        call to create_badge?
+  The beauty of it is you can pass the search params straight through:
+  
+  def index
+    @users = User.with_first_name(params[:user][:first_name]).with_injured(params[:user][:injured])
+  end
 
 
-Copyright (c) 2009 Raymond Law and Intridea, Inc., released under the MIT license
+Copyright (c) 2009 Raymond Law, David Pranata, and Intridea, Inc., released under the MIT license
